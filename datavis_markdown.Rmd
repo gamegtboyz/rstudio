@@ -1,0 +1,55 @@
+---
+title: "datavis_homework"
+author: "nextstep_datalabs"
+date: "2023-07-01"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+# One pounds sign means the big headings
+
+This is a new paragraph
+
+# More pounds means the smaller headings
+
+hahahahaha
+
+### List of my favorite dishes
+
+- Hamburger
+- Pizza
+- Hotdog
+
+### attach the site
+My site: [NSAA](https://nextstepadvisory.net)
+
+Then we will knit the file to shows them as the page
+
+### image
+![The black cats](https://images.unsplash.com/photo-1604934797110-7c506bea3b3a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1145&q=80)
