@@ -1,3 +1,7 @@
+library(tidyverse)
+library(mlbench)
+library(caret)
+
 ## try new model of resampling from bootstrap 25 iterations to LOOCV
 
 data("BostonHousing") # load the datasets
@@ -24,39 +28,39 @@ test_data <- prep_data[[2]]
 
 # 2. train model
 
-## build the trian control
+## build the train control
 ctrl <- trainControl(
-  # change resampling technique from bootstrap 25 to 50
+  # change resampling technique cv means kmean, LOOCV (without numbers), the default is 'boot' with number = 25
   method = "CV",
-  number = 10,
-  verboseIter = TRUE # will print the log into console.
+  number = 10, # under cv method, 10 means split data into 10 sections, with resampling on 10 iterations.
+  verboseIter = TRUE # will print the log of each iteration into console.
 )
 
 model <- train(medv  ~ rm + b + crim,
                data = train_data,
                method = "lm",
+               preProcess = c("center","scale"), # standardize the x variables center means xi - xbar, and scale means center / sd (z-score)
                trControl = ctrl)
 
-## variable importance
+## variable importance (check what x best describe y)
 varImp(model)
 
 ## see the results
 model
-"""
-### results description 
-we made the train on 404 samples
-based on 3 independent vaiables (predictor)
-the model resampling using bootstrapped by 25 iterations(reps) as a default settings
-RMSE, Rsquared, and MAE shown as mean across 25 iterations
-  RMSE      Rsquared   MAE     
-  6.452399  0.5378308  4.255888
 
-"""
+# ### results description 
+# we made the train on 404 samples
+# based on 3 independent vaiables (predictor)
+# the model resampling using bootstrapped by 25 iterations(reps) as a default settings
+# RMSE, Rsquared, and MAE shown as mean across 25 iterations
+#   RMSE      Rsquared   MAE     
+#   6.452399  0.5378308  4.255888
+
+
 model$finalModel
-"""
-this will show coefficients to each variables, and intercept
 
-"""
+#this will show coefficients to each variables, and intercept
+
 
 # 3. score/predict new data
 p <- predict(model,newdata=test_data)
@@ -81,11 +85,10 @@ cal_rmse <- function(actual,pred) {
 cal_mae(test_data$medv,p)
 cal_mse(test_data$medv,p)
 cal_rmse(test_data$medv,p)
-"""
-> cal_mae(test_data$medv,p)
-[1] 3.57368
-> cal_mse(test_data$medv,p)
-[1] 24.01905
-> cal_rmse(test_data$medv,p)
-[1] 4.900923 ## a bit lower than trained model, which is good
-"""
+
+# > cal_mae(test_data$medv,p)
+# [1] 3.57368
+# > cal_mse(test_data$medv,p)
+# [1] 24.01905
+# > cal_rmse(test_data$medv,p)
+# [1] 4.900923 ## a bit lower than trained model, which is acceptable
